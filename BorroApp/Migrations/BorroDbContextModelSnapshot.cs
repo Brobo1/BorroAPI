@@ -36,7 +36,7 @@ namespace BorroApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("BorroApp.Data.Models.Post", b =>
@@ -84,7 +84,7 @@ namespace BorroApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Post");
+                    b.ToTable("Post", (string)null);
                 });
 
             modelBuilder.Entity("BorroApp.Data.Models.Reservation", b =>
@@ -119,7 +119,7 @@ namespace BorroApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reservation");
+                    b.ToTable("Reservation", (string)null);
                 });
 
             modelBuilder.Entity("BorroApp.Data.Models.User", b =>
@@ -140,7 +140,7 @@ namespace BorroApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("BorroApp.Data.Models.User_Info", b =>
@@ -192,7 +192,7 @@ namespace BorroApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserInfo");
+                    b.ToTable("UserInfo", (string)null);
                 });
 
             modelBuilder.Entity("BorroApp.Data.Models.Post", b =>

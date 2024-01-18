@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
 var jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
 
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
  .AddJwtBearer(options =>
  {
@@ -46,6 +47,7 @@ app.UseCors(c => {
 		.AllowAnyMethod()
 		.AllowAnyOrigin();
 });
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
