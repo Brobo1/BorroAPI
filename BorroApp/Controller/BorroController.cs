@@ -35,7 +35,6 @@ namespace BorroApp.Controller
 
             return Ok(post);
         }
-<<<<<<< HEAD
         [HttpPost("user")]
         public async Task <IActionResult> CreateUser(CreateUserObject userInfo)
         {
@@ -82,8 +81,6 @@ namespace BorroApp.Controller
 
 
 
-=======
->>>>>>> cb3365573bff19581f5b3ef79464cae78f5c1326
     }
 }
 public class CreateUserObject
