@@ -11,16 +11,20 @@ namespace BorroApp.Controller
     [ApiController]
     public class BorroAuthorizedController : ControllerBase
     {
-        private readonly BorroController _open;
         private readonly BorroDbContext _context;
-        public BorroAuthorizedController(BorroDbContext context)
+        private readonly BorroController _open;
+
+        public BorroAuthorizedController(BorroDbContext context, BorroController open)
         {
             _context = context;
+            _open = open;
         }
+        
 
         [HttpPost]
         public async Task<IActionResult> CreatePost(Post createPost)
         {
+
             var newPost = new Post
             {
                 Title = createPost.Title,
