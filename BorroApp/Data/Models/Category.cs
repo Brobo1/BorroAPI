@@ -1,7 +1,7 @@
 ﻿namespace BorroApp.Data.Models;
 
 public class Category {
-	public int               Id    { get; set; }
-	public string            Type  { get; set; }
-	public ICollection<Post> Posts { get; set; }
+	public int                Id    { get; set; }
+	public string?            Type  { get; set; }
+	public ICollection<Post>? Posts { get; set; }
 }

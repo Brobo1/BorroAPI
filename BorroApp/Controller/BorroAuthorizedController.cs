@@ -18,7 +18,7 @@ namespace BorroApp.Controller
             _context = context;
         }
 
-
+        /*
         [HttpPost]
         public async Task<IActionResult> CreatePost(Post createPost)
         {
@@ -40,6 +40,6 @@ namespace BorroApp.Controller
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("Post created", new { id = newPost.Id }, newPost);
-        }
+        }*/
     }
 }
