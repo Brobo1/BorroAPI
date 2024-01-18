@@ -12,14 +12,12 @@ namespace BorroApp.Controller
     public class BorroAuthorizedController : ControllerBase
     {
         private readonly BorroDbContext _context;
-        private readonly BorroController _open;
 
-        public BorroAuthorizedController(BorroDbContext context, BorroController open)
+        public BorroAuthorizedController(BorroDbContext context)
         {
             _context = context;
-            _open = open;
         }
-        
+
 
         [HttpPost]
         public async Task<IActionResult> CreatePost(Post createPost)
@@ -41,7 +39,7 @@ namespace BorroApp.Controller
             _context.Post.Add(newPost);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(_open.GetOnePost), new { id = newPost.Id }, newPost);
+            return CreatedAtAction("Post created", new { id = newPost.Id }, newPost);
         }
     }
 }
