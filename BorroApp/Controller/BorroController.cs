@@ -35,27 +35,7 @@ namespace BorroApp.Controller
             return Ok(post);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreatePost(Post createPost)
-        {
-            var newPost = new Post
-            {
-                Title = createPost.Title,
-                Image = createPost.Image,
-                Price = createPost.Price,
-                DateFrom = createPost.DateFrom,
-                DateTo = createPost.DateTo,
-                Description = createPost.Description,
-                Location = createPost.Location,
-                CategoryId = createPost.CategoryId,
-                UserId = createPost.UserId,
-            };
 
-            _context.Post.Add(newPost);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetOnePost), new { id = newPost.Id }, newPost);
-        }
 
     }
 }
