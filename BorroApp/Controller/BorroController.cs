@@ -34,8 +34,5 @@ namespace BorroApp.Controller
 
             return Ok(post);
         }
-
-
-
     }
 }
