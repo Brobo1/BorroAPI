@@ -16,14 +16,23 @@ public class CategoryController : ControllerBase {
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> GetAllCategories() {
+	public async Task<IActionResult> GetCategories() {
 		return Ok(await _context.Category.ToListAsync());
 	}
-	
+
+	[HttpGet("{id:int}")]
+	public async Task<IActionResult> GetCategory(int id) {
+		var category = await _context.Category.FindAsync(id);
+		if (category == null) {
+			return NotFound();
+		}
+		return Ok(category);
+	}
+
 	[HttpPost]
-	public async Task<IActionResult> CreateCategory(CreateCategory createCategory) {
+	public async Task<IActionResult> CreateCategory(CategoryObject categoryObject) {
 		Category newCategory = new() {
-			Type = createCategory.Type,
+			Type = categoryObject.Type,
 		};
 
 		_context.Category.Add(newCategory);
@@ -31,11 +40,35 @@ public class CategoryController : ControllerBase {
 
 		return CreatedAtRoute(new { id = newCategory.Id }, newCategory);
 	}
-	
-	
-	
+
+	[HttpPut("{id:int}")]
+	public async Task<IActionResult> UpdateCategory(int id, CategoryObject title) {
+		var category = await _context.Category.FindAsync(id);
+		if (category == null) {
+			return NotFound();
+		}
+
+		category.Type = title.Type;
+		await _context.SaveChangesAsync();
+
+		return NoContent();
+	}
+
+	[HttpDelete("{id:int}")]
+	public async Task<IActionResult> DeleteCategory(int id) {
+		var category = await _context.Category.FindAsync(id);
+		if (category == null) {
+			return NotFound();
+		}
+
+		_context.Category.Remove(category);
+		await _context.SaveChangesAsync();
+
+		return NoContent();
+	}
 }
 
-public class CreateCategory {
+public class CategoryObject {
 	public string Type { get; set; }
 }
+

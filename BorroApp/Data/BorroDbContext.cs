@@ -11,7 +11,7 @@ public class BorroDbContext : DbContext {
 	public DbSet<Post>        Post        { get; set; }
 	public DbSet<Reservation> Reservation { get; set; }
 	public DbSet<User>        User        { get; set; }
-	public DbSet<User_Info>   UserInfo    { get; set; }
+	public DbSet<UserInfo>   UserInfo    { get; set; }
 	
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
