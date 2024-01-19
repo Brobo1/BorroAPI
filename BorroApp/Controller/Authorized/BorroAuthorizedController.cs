@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace BorroApp.Controller
+namespace BorroApp.Controller.Authorized
 {
     [Authorize]
     [Route("api/[controller]")]

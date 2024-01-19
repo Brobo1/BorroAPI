@@ -8,7 +8,7 @@ using System.Text;
 using BorroApp.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BorroApp.Controller
+namespace BorroApp.Controller.Unauthorized
 {
     [Route("api/[controller]")]
     [ApiController]
