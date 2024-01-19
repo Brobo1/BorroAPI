@@ -4,9 +4,10 @@ using BorroApp.Data;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BorroApp.Controller.Unauthorized;
-
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class PostController : ControllerBase {
