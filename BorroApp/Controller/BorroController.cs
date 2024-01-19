@@ -25,7 +25,7 @@ namespace BorroApp.Controller {
 		//LIGGER HER FOR TESTING
 		[HttpPost]
 		public async Task<IActionResult> CreatePost(CreatePostObject createPost) {
-			var newPost = new Post {
+			Post newPost = new Post {
 				Title       = createPost.Title,
 				Image       = createPost.Image,
 				Price       = createPost.Price,
