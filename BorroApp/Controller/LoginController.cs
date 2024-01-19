@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BorroApp.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using BorroApp.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BorroApp.Controller
 {
@@ -12,14 +15,21 @@ namespace BorroApp.Controller
     public class LoginController : ControllerBase
     {
         private IConfiguration _config;
-        public LoginController(IConfiguration config)
+        private readonly BorroDbContext _context;
+        public LoginController(IConfiguration config, BorroDbContext context)
         {
             _config = config;
+            _context = context;
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] LoginRequest loginRequest)
+        public async Task <IActionResult> Post([FromBody] LoginRequest loginRequest)
         {
+          User? user= await _context.User.FirstOrDefaultAsync(user=>user.Email == loginRequest.Email && user.Password==loginRequest.Password);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
