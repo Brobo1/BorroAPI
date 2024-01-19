@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace BorroApp.Controller
+namespace BorroApp.Controller.Unauthorized
 {
     [Route("api/[controller]")]
     [ApiController]
