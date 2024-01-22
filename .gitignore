@@ -347,3 +347,4 @@ __pycache__/
 # Cake - Uncomment if you are using it
 # tools/
 
+/BorroApp/Properties/ServiceDependencies/borro - Web Deploy/profile.arm.json
