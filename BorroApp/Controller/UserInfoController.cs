@@ -14,7 +14,7 @@ public class UserInfoController : ControllerBase {
 	public UserInfoController(BorroDbContext context) {
 		_context = context;
 	}
-	
+
 	[HttpGet("{id:int}")]
 	public async Task<IActionResult> GetUserInfo(int id) {
 		var userInfo = await _context.UserInfo.FindAsync(id);
@@ -85,7 +85,6 @@ public class UserInfoController : ControllerBase {
 
 		return NoContent();
 	}
-	
 }
 
 public class UserInfoObject {
@@ -98,5 +97,5 @@ public class UserInfoObject {
 	public string?   PhoneNumber  { get; set; }
 	public DateTime? BirthDate    { get; set; }
 	public string?   About        { get; set; }
-	public int?      UserId       { get; set; }
+	public int       UserId       { get; set; }
 }

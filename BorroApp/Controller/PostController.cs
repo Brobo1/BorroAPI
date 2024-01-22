@@ -11,6 +11,7 @@ namespace BorroApp.Controller.Unauthorized;
 [ApiController]
 public class PostController : ControllerBase {
 	private readonly BorroDbContext _context;
+
 	public PostController(BorroDbContext context) {
 		_context = context;
 	}
@@ -24,11 +25,12 @@ public class PostController : ControllerBase {
 
 		return Ok(post);
 	}
+
 	[HttpGet]
 	public async Task<IActionResult> GetPosts() {
 		return Ok(await _context.Post.ToListAsync());
 	}
-	
+
 	[HttpPost]
 	public async Task<IActionResult> CreatePost(PostObject createPost) {
 		Post newPost = new Post {
@@ -48,7 +50,7 @@ public class PostController : ControllerBase {
 
 		return CreatedAtRoute(new { id = newPost.Id }, newPost);
 	}
-	
+
 	[HttpPut("{id:int}")]
 	public async Task<IActionResult> UpdatePost(int id, PostObject updatePost) {
 		var post = await _context.Post.FindAsync(id);
@@ -89,10 +91,10 @@ public class PostObject {
 	public string?   Title       { get; set; }
 	public string?   Image       { get; set; }
 	public double?   Price       { get; set; }
-	public DateTime? DateFrom    { get; set; }
-	public DateTime? DateTo      { get; set; }
-	public string?   Description { get; set; }
-	public string?   Location    { get; set; }
-	public int?      CategoryId  { get; set; }
-	public int?      UserId      { get; set; }
+	public DateTime DateFrom    { get; set; }
+	public DateTime DateTo      { get; set; }
+	public string   Description { get; set; }
+	public string   Location    { get; set; }
+	public int      CategoryId  { get; set; }
+	public int    UserId      { get; set; }
 }
