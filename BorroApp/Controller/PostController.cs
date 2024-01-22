@@ -4,6 +4,7 @@ using BorroApp.Data;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BorroApp.Controller.Unauthorized;
 
@@ -31,6 +32,7 @@ public class PostController : ControllerBase {
 		return Ok(await _context.Post.ToListAsync());
 	}
 
+	[Authorize]
 	[HttpPost]
 	public async Task<IActionResult> CreatePost(PostObject createPost) {
 		Post newPost = new Post {
@@ -51,6 +53,7 @@ public class PostController : ControllerBase {
 		return CreatedAtRoute(new { id = newPost.Id }, newPost);
 	}
 
+	[Authorize]
 	[HttpPut("{id:int}")]
 	public async Task<IActionResult> UpdatePost(int id, PostObject updatePost) {
 		var post = await _context.Post.FindAsync(id);
@@ -73,6 +76,7 @@ public class PostController : ControllerBase {
 		return NoContent();
 	}
 
+	[Authorize]
 	[HttpDelete("{id:int}")]
 	public async Task<IActionResult> DeletePost(int id) {
 		var post = await _context.Post.FindAsync(id);
@@ -88,13 +92,13 @@ public class PostController : ControllerBase {
 }
 
 public class PostObject {
-	public string?   Title       { get; set; }
-	public string?   Image       { get; set; }
-	public double?   Price       { get; set; }
+	public string?  Title       { get; set; }
+	public string?  Image       { get; set; }
+	public double?  Price       { get; set; }
 	public DateTime DateFrom    { get; set; }
 	public DateTime DateTo      { get; set; }
 	public string   Description { get; set; }
 	public string   Location    { get; set; }
 	public int      CategoryId  { get; set; }
-	public int    UserId      { get; set; }
+	public int      UserId      { get; set; }
 }

@@ -1,6 +1,6 @@
 ﻿using BorroApp.Data;
 using BorroApp.Data.Models;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,8 +41,8 @@ public class UserController : ControllerBase {
 
 		return CreatedAtRoute(new { id = newUser.Id }, newUser);
 	}
-
-	[HttpPut("{id:int}")]
+    [Authorize]
+    [HttpPut("{id:int}")]
 	public async Task<IActionResult> UpdateUser(int id, UserObject updateUser) {
 		var user = await _context.User.FindAsync(id);
 		if (user == null) {
@@ -55,8 +55,8 @@ public class UserController : ControllerBase {
 
 		return NoContent();
 	}
-
-	[HttpDelete("{id:int}")]
+    [Authorize]
+    [HttpDelete("{id:int}")]
 	public async Task<IActionResult> DeleteUser(int id) {
 		var user = await _context.User.FindAsync(id);
 		if (user == null) {

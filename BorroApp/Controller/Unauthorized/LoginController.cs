@@ -22,7 +22,7 @@ namespace BorroApp.Controller.Unauthorized
             _context = context;
         }
 
-        [HttpPost]
+        [HttpPost()]
         public async Task <IActionResult> Post([FromBody] LoginRequest loginRequest)
         {
           User? user= await _context.User.FirstOrDefaultAsync(user=>user.Email == loginRequest.Email && user.Password==loginRequest.Password);
@@ -42,7 +42,12 @@ namespace BorroApp.Controller.Unauthorized
 
             var token = new JwtSecurityTokenHandler().WriteToken(Sectoken);
 
-            return Ok(token);
+            return Ok(new
+            {
+                AccessToken = token,
+                ExpiresAt = Sectoken.ValidTo,
+                id=user.Id
+            });
         }
     }
 }
