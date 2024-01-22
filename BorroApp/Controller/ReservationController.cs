@@ -80,10 +80,10 @@ public class ReservationController : ControllerBase {
 }
 
 public class ReservationObject {
-	public DateTime? DateFrom { get; set; }
-	public DateTime? DateTo   { get; set; }
-	public Status?   Status   { get; set; }
+	public DateTime DateFrom { get; set; }
+	public DateTime DateTo   { get; set; }
+	public Status   Status   { get; set; }
 	public double?   Price    { get; set; }
-	public int?      UserId   { get; set; }
-	public int?      PostId   { get; set; }
+	public int      UserId   { get; set; }
+	public int      PostId   { get; set; }
 }

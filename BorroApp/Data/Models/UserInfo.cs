@@ -11,6 +11,6 @@ public class UserInfo {
 	public string?   PhoneNumber  { get; set; }
 	public DateTime? BirthDate    { get; set; }
 	public string?   About        { get; set; }
-	public int?      UserId       { get; set; }
+	public int      UserId       { get; set; }
 	public User?     User         { get; set; }
 }

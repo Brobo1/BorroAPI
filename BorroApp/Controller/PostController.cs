@@ -7,10 +7,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BorroApp.Controller.Unauthorized;
+
 [Route("api/[controller]")]
 [ApiController]
 public class PostController : ControllerBase {
 	private readonly BorroDbContext _context;
+
 	public PostController(BorroDbContext context) {
 		_context = context;
 	}
@@ -24,12 +26,14 @@ public class PostController : ControllerBase {
 
 		return Ok(post);
 	}
+
 	[HttpGet]
 	public async Task<IActionResult> GetPosts() {
 		return Ok(await _context.Post.ToListAsync());
 	}
-    [Authorize]
-    [HttpPost]
+
+	[Authorize]
+	[HttpPost]
 	public async Task<IActionResult> CreatePost(PostObject createPost) {
 		Post newPost = new Post {
 			Title       = createPost.Title,
@@ -48,8 +52,9 @@ public class PostController : ControllerBase {
 
 		return CreatedAtRoute(new { id = newPost.Id }, newPost);
 	}
-    [Authorize]
-    [HttpPut("{id:int}")]
+
+	[Authorize]
+	[HttpPut("{id:int}")]
 	public async Task<IActionResult> UpdatePost(int id, PostObject updatePost) {
 		var post = await _context.Post.FindAsync(id);
 		if (post == null) {
@@ -70,8 +75,9 @@ public class PostController : ControllerBase {
 
 		return NoContent();
 	}
-    [Authorize]
-    [HttpDelete("{id:int}")]
+
+	[Authorize]
+	[HttpDelete("{id:int}")]
 	public async Task<IActionResult> DeletePost(int id) {
 		var post = await _context.Post.FindAsync(id);
 		if (post == null) {
@@ -86,13 +92,13 @@ public class PostController : ControllerBase {
 }
 
 public class PostObject {
-	public string?   Title       { get; set; }
-	public string?   Image       { get; set; }
-	public double?   Price       { get; set; }
-	public DateTime? DateFrom    { get; set; }
-	public DateTime? DateTo      { get; set; }
-	public string?   Description { get; set; }
-	public string?   Location    { get; set; }
-	public int?      CategoryId  { get; set; }
-	public int?      UserId      { get; set; }
+	public string?  Title       { get; set; }
+	public string?  Image       { get; set; }
+	public double?  Price       { get; set; }
+	public DateTime DateFrom    { get; set; }
+	public DateTime DateTo      { get; set; }
+	public string   Description { get; set; }
+	public string   Location    { get; set; }
+	public int      CategoryId  { get; set; }
+	public int      UserId      { get; set; }
 }
