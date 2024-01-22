@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BorroApp.Controller.Unauthorized;
-[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class PostController : ControllerBase {
@@ -29,8 +28,8 @@ public class PostController : ControllerBase {
 	public async Task<IActionResult> GetPosts() {
 		return Ok(await _context.Post.ToListAsync());
 	}
-	
-	[HttpPost]
+    [Authorize]
+    [HttpPost]
 	public async Task<IActionResult> CreatePost(PostObject createPost) {
 		Post newPost = new Post {
 			Title       = createPost.Title,
@@ -49,8 +48,8 @@ public class PostController : ControllerBase {
 
 		return CreatedAtRoute(new { id = newPost.Id }, newPost);
 	}
-	
-	[HttpPut("{id:int}")]
+    [Authorize]
+    [HttpPut("{id:int}")]
 	public async Task<IActionResult> UpdatePost(int id, PostObject updatePost) {
 		var post = await _context.Post.FindAsync(id);
 		if (post == null) {
@@ -71,8 +70,8 @@ public class PostController : ControllerBase {
 
 		return NoContent();
 	}
-
-	[HttpDelete("{id:int}")]
+    [Authorize]
+    [HttpDelete("{id:int}")]
 	public async Task<IActionResult> DeletePost(int id) {
 		var post = await _context.Post.FindAsync(id);
 		if (post == null) {

@@ -1,6 +1,6 @@
 ﻿using BorroApp.Data;
 using BorroApp.Data.Models;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,8 +29,8 @@ public class ReservationController : ControllerBase {
 	public async Task<IActionResult> GetReservations() {
 		return Ok(await _context.Reservation.ToListAsync());
 	}
-
-	[HttpPost]
+    [Authorize]
+    [HttpPost]
 	public async Task<IActionResult> CreateReservation(ReservationObject createReservation) {
 		Reservation newReservation = new() {
 			DateFrom = createReservation.DateFrom,
@@ -46,8 +46,8 @@ public class ReservationController : ControllerBase {
 
 		return CreatedAtRoute(new { id = newReservation.Id }, newReservation);
 	}
-
-	[HttpPut("{id:int}")]
+    [Authorize]
+    [HttpPut("{id:int}")]
 	public async Task<IActionResult> UpdateReservation(int id, ReservationObject updateReservation) {
 		var reservation = await _context.Reservation.FindAsync(id);
 		if (reservation == null) {
@@ -64,8 +64,8 @@ public class ReservationController : ControllerBase {
 
 		return NoContent();
 	}
-
-	[HttpDelete("{id:int}")]
+    [Authorize]
+    [HttpDelete("{id:int}")]
 	public async Task<IActionResult> DeleteReservation(int id) {
 		var reservation = await _context.Reservation.FindAsync(id);
 		if (reservation == null) {

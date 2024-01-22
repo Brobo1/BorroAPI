@@ -1,6 +1,6 @@
 ﻿using BorroApp.Data;
 using BorroApp.Data.Models;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,22 +40,26 @@ public class CategoryController : ControllerBase {
 
 		return CreatedAtRoute(new { id = newCategory.Id }, newCategory);
 	}
-
-	[HttpPut("{id:int}")]
+    [Authorize]
+    [HttpPut("{id:int}")]
 	public async Task<IActionResult> UpdateCategory(int id, CategoryObject title) {
-		var category = await _context.Category.FindAsync(id);
+		var category = await _context.Category.FindAsync(id);//(title.Id)
 		if (category == null) {
 			return NotFound();
 		}
-
-		category.Type = title.Type;
+        /*
+		 * var post= await _context.Post.FindAsync(id);
+		 * post. CategoryId=title.Id
+		 * await _context.SaveChangesAsync();
+		 */
+        category.Type = title.Type;
 		await _context.SaveChangesAsync();
 
 		return NoContent();
 	}
-
-	[HttpDelete("{id:int}")]
-	public async Task<IActionResult> DeleteCategory(int id) {
+    
+    [HttpDelete("{id:int}")]
+	public async Task<IActionResult> DeleteCategory(int id ) {
 		var category = await _context.Category.FindAsync(id);
 		if (category == null) {
 			return NotFound();
@@ -66,9 +70,25 @@ public class CategoryController : ControllerBase {
 
 		return NoContent();
 	}
+   // [Authorize]
+    /*[HttpDelete("category/{id:int}")]
+     public async Task<IActionResult> DeleteCategoryFromPost(int id /*CategoryObject category*///)
+    /*{
+        var category = await _context.Category.FindAsync(category.Id)
+        if (category == null)
+        {
+            return NotFound();
+        }
+	var post= await _context.Post.FindAsync(int id);
+	 _context.Post.CategoryId=0;
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }*/
 }
 
 public class CategoryObject {
-	public string Type { get; set; }
+	public string? Type { get; set; }
+	//public int? CategoryId {get;set;}
 }
 

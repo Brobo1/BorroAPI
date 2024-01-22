@@ -1,6 +1,6 @@
 ﻿using BorroApp.Data;
 using BorroApp.Data.Models;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,20 +17,21 @@ public class UserInfoController : ControllerBase {
 	
 	[HttpGet("{id:int}")]
 	public async Task<IActionResult> GetUserInfo(int id) {
-		var userInfo = await _context.UserInfo.FindAsync(id);
+		//var userInfo = await _context.UserInfo.FindAsync(id);
+		var userInfo= await _context.UserInfo.FirstOrDefaultAsync(userInfo=>userInfo.UserId==id);
 		if (userInfo == null) {
 			return NotFound();
 		}
 
 		return Ok(userInfo);
 	}
-
-	[HttpGet]
+    [Authorize]
+    [HttpGet]
 	public async Task<IActionResult> GetUserInfos() {
 		return Ok(await _context.UserInfo.ToListAsync());
 	}
-
-	[HttpPost]
+    [Authorize]
+    [HttpPost]
 	public async Task<IActionResult> CreateUserInfo(UserInfoObject createUserInfo) {
 		UserInfo newUserInfo = new() {
 			FirstName    = createUserInfo.FirstName,
@@ -50,8 +51,8 @@ public class UserInfoController : ControllerBase {
 
 		return CreatedAtRoute(new { id = newUserInfo.Id }, newUserInfo);
 	}
-
-	[HttpPut("{id:int}")]
+    [Authorize]
+    [HttpPut("{id:int}")]
 	public async Task<IActionResult> UpdateUserInfo(int id, UserInfoObject updateUserInfo) {
 		var userInfo = await _context.UserInfo.FindAsync(id);
 		if (userInfo == null) {
@@ -72,8 +73,8 @@ public class UserInfoController : ControllerBase {
 
 		return NoContent();
 	}
-
-	[HttpDelete("{id:int}")]
+    [Authorize]
+    [HttpDelete("{id:int}")]
 	public async Task<IActionResult> DeleteUserInfo(int id) {
 		var userInfo = await _context.UserInfo.FindAsync(id);
 		if (userInfo == null) {
