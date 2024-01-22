@@ -39,7 +39,7 @@ public class UserController : ControllerBase {
 		_context.User.Add(newUser);
 		await _context.SaveChangesAsync();
 
-		return CreatedAtRoute(new { id = newUser.Id }, newUser);
+		return CreatedAtRoute(new { id = newUser.Id }, new { userId = newUser.Id });
 	}
     [Authorize]
     [HttpPut("{id:int}")]
