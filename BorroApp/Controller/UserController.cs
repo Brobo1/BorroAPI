@@ -13,8 +13,9 @@ public class UserController : ControllerBase {
 	public UserController(BorroDbContext context) {
 		_context = context;
 	}
-	
-	[HttpGet("{id:int}")]
+
+    [Authorize]
+    [HttpGet("{id:int}")]
 	public async Task<IActionResult> GetUser(int id) {
 		var user = await _context.User.FindAsync(id);
 		if (user == null) {
@@ -24,10 +25,7 @@ public class UserController : ControllerBase {
 		return Ok(user);
 	}
 
-	[HttpGet]
-	public async Task<IActionResult> GetUsers() {
-		return Ok(await _context.User.ToListAsync());
-	}
+
 
 	[HttpPost]
 	public async Task<IActionResult> CreateUser(UserObject createUser) {
@@ -39,7 +37,7 @@ public class UserController : ControllerBase {
 		_context.User.Add(newUser);
 		await _context.SaveChangesAsync();
 
-		return CreatedAtRoute(new { id = newUser.Id }, newUser);
+		return CreatedAtRoute(new { id = newUser.Id }, new { userId = newUser.Id });
 	}
     [Authorize]
     [HttpPut("{id:int}")]
