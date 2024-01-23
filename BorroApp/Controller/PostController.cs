@@ -89,6 +89,19 @@ public class PostController : ControllerBase {
 
 		return NoContent();
 	}
+
+    [Authorize]
+	[HttpGet("posts/{id}")]
+	public async Task<IActionResult> GetAllUserPosts(int userId)
+	{
+		ICollection<Post> posts = await _context.Post.Where(p => p.UserId == userId).ToListAsync();
+		if (posts == null)
+		{
+			return NotFound();
+		}
+		return Ok(posts);
+
+	}
 }
 
 public class PostObject {
