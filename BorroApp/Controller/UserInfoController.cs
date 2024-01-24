@@ -87,7 +87,7 @@ public class UserInfoController : ControllerBase {
 		return NoContent();
 	}
 	[Authorize]
-	[HttpGet]
+	[HttpGet("postOwner/{id:int}")]
 	public async Task<IActionResult> GetUserInfoByPostId(int postId)
 	{
 		User? user= await _context.User.Include(u=>u.Posts).Where(u=>u.Posts.Any(p=>p.Id==postId)).FirstOrDefaultAsync();
