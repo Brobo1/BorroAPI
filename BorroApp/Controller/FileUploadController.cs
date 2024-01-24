@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BorroApp.Controller
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class FileUploadController : ControllerBase
     {
         private readonly BorroDbContext _context;
