@@ -1,8 +1,10 @@
 using BorroApp.Data;
-
+using Azure.Storage.Blobs;
+using Microsoft.Extensions.Azure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using BorroApp.Extensions;
 
 using System.Text;
 
@@ -23,8 +25,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 		   };
 	   });
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddAzureClients(x =>
+{
+    x.AddClient<BlobContainerClient, BlobContainerClientOptions>(opt =>
+        new BlobContainerClient(
+            builder.Configuration["PictureStorage:ConnectionString"],
+            builder.Configuration["PictureStorage:ContainerName"]));
+});
+
 
 builder.Services.AddCors();
 builder.Services.AddControllers();
