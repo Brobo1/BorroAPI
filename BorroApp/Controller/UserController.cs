@@ -66,10 +66,42 @@ public class UserController : ControllerBase {
 
 		return NoContent();
 	}
+
+    [Authorize]
+    [HttpPut("changePassword/{id:int}")]
+    public async Task<IActionResult> ChangePassword(int id, ChangePasswordObject changePassword)
+    {
+        var user = await _context.User.FindAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        // Validate the old password before changing
+        if (!VerifyPassword(changePassword.OldPassword, user.Password))
+        {
+            return BadRequest("Invalid old password");
+        }
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    private bool VerifyPassword(string inputPassword, string storedPassword)
+    {
+        return inputPassword == storedPassword;
+    }
 }
 
 public class UserObject {
 	public string? Email    { get; set; }
 	public string? Password { get; set; }
 
+}
+
+public class ChangePasswordObject
+{
+    public string OldPassword { get; set; }
+    public string NewPassword { get; set; }
 }
