@@ -20,7 +20,7 @@ namespace BorroApp.Controller
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadImage(CreateFile createFile)
+        public async Task<IActionResult> UploadImage([FromForm] CreateFile createFile)
         {
             var extension = Path.GetExtension(createFile.Picture.FileName);
             string whichType = createFile.Type;
@@ -32,8 +32,8 @@ namespace BorroApp.Controller
 
             if (createFile.Type == "post")
             {
-                var stuff = await _context.Post.FindAsync(createFile.Id);
-                var blobClient = _blobContainerClient.GetBlobClient($"{whichType}_{stuff.Id}{extension}");
+                var post = await _context.Post.FindAsync(createFile.Id);
+                var blobClient = _blobContainerClient.GetBlobClient($"{whichType}_{post.Id}{extension}");
                 await using var data = createFile.Picture.OpenReadStream();
 
                 await blobClient.UploadAsync(data, new BlobHttpHeaders
@@ -41,14 +41,14 @@ namespace BorroApp.Controller
                     ContentType = createFile.Picture.ContentType
                 });
 
-                stuff.Image = blobClient.Uri.ToString();
+                post.Image = blobClient.Uri.ToString();
                 await _context.SaveChangesAsync();
             }
 
             if (createFile.Type == "userInfo")
             {
-                var stuff = await _context.UserInfo.FindAsync(createFile.Id);
-                var blobClient = _blobContainerClient.GetBlobClient($"{whichType}_{stuff.Id}{extension}");
+                var userInfo = await _context.UserInfo.FindAsync(createFile.Id);
+                var blobClient = _blobContainerClient.GetBlobClient($"{whichType}_{userInfo.Id}{extension}");
                 await using var data = createFile.Picture.OpenReadStream();
 
                 await blobClient.UploadAsync(data, new BlobHttpHeaders
@@ -56,7 +56,7 @@ namespace BorroApp.Controller
                     ContentType = createFile.Picture.ContentType
                 });
 
-                stuff.ProfileImage = blobClient.Uri.ToString();
+                userInfo.ProfileImage = blobClient.Uri.ToString();
                 await _context.SaveChangesAsync();
             }
             return Created();
