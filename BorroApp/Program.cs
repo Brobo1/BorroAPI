@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using BorroApp.Extensions;
 
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder   = WebApplication.CreateBuilder(args);
 var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
@@ -35,7 +36,10 @@ builder.Services.AddAzureClients(x =>
 
 
 builder.Services.AddCors();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(c =>
+{
+	c.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BorroDbContext>(
