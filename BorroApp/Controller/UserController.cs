@@ -81,11 +81,18 @@ public class UserController : ControllerBase {
         if (!VerifyPassword(changePassword.OldPassword, user.Password))
         {
             return BadRequest("Invalid old password");
+		}
+		else
+		{
+			user.Password=changePassword.NewPassword;
+            await _context.SaveChangesAsync();
+			return Ok(user);
+
         }
 
-        await _context.SaveChangesAsync();
+       
 
-        return NoContent();
+       
     }
 
     private bool VerifyPassword(string inputPassword, string storedPassword)
