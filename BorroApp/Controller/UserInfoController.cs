@@ -14,7 +14,7 @@ public class UserInfoController : ControllerBase {
 	public UserInfoController(BorroDbContext context) {
 		_context = context;
 	}
-
+	[Authorize]
 	[HttpGet("{id:int}")]
 	public async Task<IActionResult> GetUserInfo(int id) {
 		//var userInfo = await _context.UserInfo.FindAsync(id);
@@ -86,6 +86,31 @@ public class UserInfoController : ControllerBase {
 
 		return NoContent();
 	}
+	[Authorize]
+	[HttpGet]
+	public async Task<IActionResult> GetUserInfoByPostId(int postId)
+	{
+		User? user= await _context.User.Include(u=>u.Posts).Where(u=>u.Posts.Any(p=>p.Id==postId)).FirstOrDefaultAsync();
+		if (user == null)
+		{
+			return NotFound();
+		}
+		UserInfo? userInfo= await _context.UserInfo.Where( userInfo=>userInfo.UserId== user.Id).FirstOrDefaultAsync();
+		if (userInfo == null)
+		{
+			return NotFound();
+		}
+		UserContactInfo? userContacts = new()
+		{
+			FirstName = userInfo.FirstName,
+			LastName = userInfo.LastName,
+			PhoneNumber = userInfo.PhoneNumber,
+			EMail = user.Email,
+		};
+		return Ok(userContacts);
+		//UserInfo? userInfo= await _context.UserInfo.whe
+
+	}
 }
 
 public class UserInfoObject {
@@ -99,4 +124,11 @@ public class UserInfoObject {
 	public DateTime? BirthDate    { get; set; }
 	public string?   About        { get; set; }
 	public int       UserId       { get; set; }
+}
+public class UserContactInfo
+{
+	public string? FirstName { get; set; }
+	public string? LastName { get; set;}
+	public string? PhoneNumber { get; set;}
+	public string EMail { get; set; }
 }
