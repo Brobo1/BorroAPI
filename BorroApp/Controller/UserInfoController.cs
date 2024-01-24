@@ -86,7 +86,7 @@ public class UserInfoController : ControllerBase {
 
 		return NoContent();
 	}
-	[Authorize]
+
 	[HttpGet("postOwner/{id:int}")]
 	public async Task<IActionResult> GetUserInfoByPostId(int postId)
 	{
