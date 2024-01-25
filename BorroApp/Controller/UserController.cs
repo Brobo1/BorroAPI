@@ -31,13 +31,14 @@ public class UserController : ControllerBase {
 	public async Task<IActionResult> CreateUser(UserObject createUser) {
 		User newUser = new() {
 			Email    = createUser.Email,
-			Password = createUser.Password
-		};
+			Password = createUser.Password,
+            UserInfo = new() { FirstName = createUser.FirstName, }
+        };
 
 		_context.User.Add(newUser);
 		await _context.SaveChangesAsync();
 
-		return CreatedAtRoute(new { id = newUser.Id }, new { userId = newUser.Id });
+        return CreatedAtRoute(new { id = newUser.Id },new CreateUserResponse { FirstName=newUser.UserInfo.FirstName, userId=newUser.Id, userInfoId=newUser.UserInfo.Id});
 	}
     [Authorize]
     [HttpPut("{id:int}")]
@@ -104,6 +105,7 @@ public class UserController : ControllerBase {
 public class UserObject {
 	public string? Email    { get; set; }
 	public string? Password { get; set; }
+    public string? FirstName { get; set; }
 
 }
 
@@ -111,4 +113,10 @@ public class ChangePasswordObject
 {
     public string OldPassword { get; set; }
     public string NewPassword { get; set; }
+}
+public class CreateUserResponse
+{
+	public int userId {  get; set; }
+	public int userInfoId { get; set; }
+	public string FirstName { get; set; }
 }
