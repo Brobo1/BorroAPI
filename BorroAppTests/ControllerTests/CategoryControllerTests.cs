@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 using Xunit.Abstractions;
 
-namespace BorroAppTests;
+namespace BorroAppTests.ControllerTests;
 
 public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory<Program>> {
 	private readonly CustomWebApplicationFactory<Program> _factory;
