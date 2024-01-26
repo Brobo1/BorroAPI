@@ -21,6 +21,7 @@ public class ReservationController : ControllerBase {
         return Ok(await _context.Reservation.ToListAsync());
     }
 
+	[Authorize]
     [HttpGet("{id:int}")]
 	public async Task<IActionResult> GetReservation(int id) {
 		var reservation = await _context.Reservation.FindAsync(id);
