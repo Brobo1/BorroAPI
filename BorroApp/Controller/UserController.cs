@@ -17,7 +17,7 @@ public class UserController : ControllerBase {
     [Authorize]
     [HttpGet("{id:int}")]
 	public async Task<IActionResult> GetUser(int id) {
-		var user = await _context.User.Include(x => x.UserInfo).FirstOrDefaultAsync(x => x.Id == id);
+		var user = await _context.User.Include(x => x.UserInfo).FirstOrDefaultAsync(id => id.Id);
 		if (user == null) {
 			return NotFound();
 		}

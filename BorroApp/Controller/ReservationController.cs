@@ -15,7 +15,13 @@ public class ReservationController : ControllerBase {
 		_context = context;
 	}
 
-	[HttpGet("{id:int}")]
+    [HttpGet]
+    public async Task<IActionResult> GetReservations()
+    {
+        return Ok(await _context.Reservation.ToListAsync());
+    }
+
+    [HttpGet("{id:int}")]
 	public async Task<IActionResult> GetReservation(int id) {
 		var reservation = await _context.Reservation.FindAsync(id);
 		if (reservation == null) {
@@ -25,10 +31,17 @@ public class ReservationController : ControllerBase {
 		return Ok(reservation);
 	}
 
-	[HttpGet]
-	public async Task<IActionResult> GetReservations() {
-		return Ok(await _context.Reservation.ToListAsync());
-	}
+    [HttpGet("availability/{postId:int}")]
+    public async Task<IActionResult> GetAvailability(int postId)
+    {
+        var reservations = await _context.Reservation
+            .Where(r => r.PostId == postId && r.Status == Status.Reserved)
+            .ToListAsync();
+
+        var reservedDates = reservations.Select(r => new { r.DateFrom, r.DateTo }).ToList();
+        return Ok(reservedDates);
+    }
+
     [Authorize]
     [HttpPost]
 	public async Task<IActionResult> CreateReservation(ReservationObject createReservation) {
