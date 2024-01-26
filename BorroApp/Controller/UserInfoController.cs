@@ -14,7 +14,7 @@ public class UserInfoController : ControllerBase {
 	public UserInfoController(BorroDbContext context) {
 		_context = context;
 	}
-	[Authorize]
+	//[Authorize]
 	[HttpGet("{id:int}")]
 	public async Task<IActionResult> GetUserInfo(int id) {
 		//var userInfo = await _context.UserInfo.FindAsync(id);
