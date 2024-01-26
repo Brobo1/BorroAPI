@@ -36,6 +36,7 @@ public class UserInfoController : ControllerBase {
 		UserInfo newUserInfo = new() {
 			FirstName    = createUserInfo.FirstName,
 			LastName     = createUserInfo.LastName,
+			ProfileImage = createUserInfo.ProfileImage,
 			Address      = createUserInfo.Address,
 			PostCode     = createUserInfo.PostCode,
 			City         = createUserInfo.City,
@@ -60,7 +61,6 @@ public class UserInfoController : ControllerBase {
 
 		userInfo.FirstName    = updateUserInfo.FirstName;
 		userInfo.LastName     = updateUserInfo.LastName;
-		userInfo.ProfileImage = updateUserInfo.ProfileImage;
 		userInfo.Address      = updateUserInfo.Address;
 		userInfo.PostCode     = updateUserInfo.PostCode;
 		userInfo.City         = updateUserInfo.City;
