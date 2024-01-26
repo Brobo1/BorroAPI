@@ -9,6 +9,7 @@ using BorroApp.Extensions;
 using System.Text;
 using System.Text.Json.Serialization;
 
+
 var builder   = WebApplication.CreateBuilder(args);
 var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
 var jwtKey    = builder.Configuration.GetSection("Jwt:Key").Get<string>();
@@ -63,3 +64,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
