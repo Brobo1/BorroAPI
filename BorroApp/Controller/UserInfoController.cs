@@ -36,7 +36,6 @@ public class UserInfoController : ControllerBase {
 		UserInfo newUserInfo = new() {
 			FirstName    = createUserInfo.FirstName,
 			LastName     = createUserInfo.LastName,
-			ProfileImage = createUserInfo.ProfileImage,
 			Address      = createUserInfo.Address,
 			PostCode     = createUserInfo.PostCode,
 			City         = createUserInfo.City,
