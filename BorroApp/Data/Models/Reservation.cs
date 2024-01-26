@@ -6,7 +6,7 @@ public class Reservation {
 	public int       Id       { get; set; }
 	public DateTime DateFrom { get; set; } = DateTime.Now;
 	public DateTime DateTo   { get; set; } = DateTime.Now;
-	public Status   Status   { get; set; } = Models.Status.Pending;
+	public Status   Status   { get; set; }
 	public double?   Price    { get; set; }
 	public int      UserId   { get; set; }
 	public User?     User     { get; set; }
