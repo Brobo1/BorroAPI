@@ -14,7 +14,7 @@ namespace BorroApp.Controller
         public int GenerateRandomNumber()
         {
             Random random = new Random();
-            return random.Next(1000);
+            return random.Next(10000);
         }
         private readonly BorroDbContext _context;
         private readonly BlobContainerClient _blobContainerClient;
