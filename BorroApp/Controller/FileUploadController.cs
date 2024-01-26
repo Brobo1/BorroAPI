@@ -11,6 +11,11 @@ namespace BorroApp.Controller
     [ApiController]
     public class FileUploadController : ControllerBase
     {
+        public int GenerateRandomNumber()
+        {
+            Random random = new Random();
+            return random.Next(1000);
+        }
         private readonly BorroDbContext _context;
         private readonly BlobContainerClient _blobContainerClient;
         public FileUploadController(BorroDbContext context, BlobContainerClient blobContainerClient)
@@ -33,7 +38,7 @@ namespace BorroApp.Controller
             if (createFile.Type == "post")
             {
                 var post = await _context.Post.FindAsync(createFile.Id);
-                var blobClient = _blobContainerClient.GetBlobClient($"{whichType}_{post.Id}{extension}");
+                var blobClient = _blobContainerClient.GetBlobClient($"{whichType}_{post.Id}_{GenerateRandomNumber()}_{extension}");
                 await using var data = createFile.Picture.OpenReadStream();
 
                 await blobClient.UploadAsync(data, new BlobHttpHeaders
@@ -48,7 +53,7 @@ namespace BorroApp.Controller
             if (createFile.Type == "userInfo")
             {
                 var userInfo = await _context.UserInfo.FindAsync(createFile.Id);
-                var blobClient = _blobContainerClient.GetBlobClient($"{whichType}_{userInfo.Id}{extension}");
+                var blobClient = _blobContainerClient.GetBlobClient($"{whichType}_{userInfo.Id}_{GenerateRandomNumber()}_{extension}");
                 await using var data = createFile.Picture.OpenReadStream();
 
                 await blobClient.UploadAsync(data, new BlobHttpHeaders
