@@ -11,7 +11,7 @@ namespace BorroApp.Controller
     [ApiController]
     public class FileUploadController : ControllerBase
     {
-        public int GenerateRandomNumber()
+        private int GenerateRandomNumber()
         {
             Random random = new Random();
             return random.Next(10000);
