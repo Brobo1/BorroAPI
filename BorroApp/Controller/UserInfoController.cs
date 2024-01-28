@@ -131,5 +131,5 @@ public class UserContactInfo
 	public string? LastName { get; set;}
 	public string? PhoneNumber { get; set;}
 	public string EMail { get; set; }
-	public string ProfilePicture {  get; set; }
+	public string? ProfilePicture {  get; set; }
 }
