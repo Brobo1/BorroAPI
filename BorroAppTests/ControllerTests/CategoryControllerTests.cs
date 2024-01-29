@@ -55,7 +55,7 @@ public class CategoryControllerTests : IClassFixture<CustomWebApplicationFactory
 		Assert.NotNull(createdCategory);
 		Assert.Equal(newCategory.Type, createdCategory.Type);
 	}
-
+ 
 	[Fact]
 	public async Task TestGetCategory() {
 		// Arrange

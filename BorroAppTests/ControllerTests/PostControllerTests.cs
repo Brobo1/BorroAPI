@@ -31,7 +31,7 @@ public class PostControllerTests : IClassFixture<CustomWebApplicationFactory<Pro
 
 		_client.DefaultRequestHeaders.Authorization =
 			new AuthenticationHeaderValue("Bearer",
-										  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZGRyZXNzIjoiUmluZ3NodXN2ZWllbiAzNUEiLCJpZCI6IjEiLCJleHAiOjE3MDYyNjMxNjUsImlzcyI6ImJvcnJvLmF6dXJld2Vic2l0ZXMubmV0IiwiYXVkIjoiYm9ycm8uYXp1cmV3ZWJzaXRlcy5uZXQifQ.q9f0TnRqiJL-99gpPJ2FySJk4roC3XXHvkkBvmeXtNg");
+										  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZGRyZXNzIjoiTGVpdiBFaXJpa3Nzb25zIGdhdGUgMyIsImlkIjoiMSIsImV4cCI6MTcwNjUzNjE0MywiaXNzIjoiYm9ycm8uYXp1cmV3ZWJzaXRlcy5uZXQiLCJhdWQiOiJib3Jyby5henVyZXdlYnNpdGVzLm5ldCJ9.Dgno4ZmuWtWZfiNJJYpmWbprGa7caW20SK8NC7_OVpY");
 	}
 
 	[Fact]
@@ -120,7 +120,7 @@ public class PostControllerTests : IClassFixture<CustomWebApplicationFactory<Pro
 	[Fact]
 	public async Task TestDeletePost() {
 		// Arrange
-		var postId = 21; // Supposing it's an existing Post Id
+		var postId = 29; // Supposing it's an existing Post Id
 
 		// Act
 		var deleteResponse = await _client.DeleteAsync($"/api/post/{postId}");
