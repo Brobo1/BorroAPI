@@ -12,7 +12,7 @@ using System.Security.Claims;
 namespace BorroApp.Controller.Unauthorized
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController] 
     public class LoginController : ControllerBase
     {
         private IConfiguration _config;
