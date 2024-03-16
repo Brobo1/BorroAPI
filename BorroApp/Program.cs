@@ -1,14 +1,16 @@
 using BorroApp.Data;
+
 using Azure.Storage.Blobs;
+
 using Microsoft.Extensions.Azure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+
 using BorroApp.Extensions;
 
 using System.Text;
 using System.Text.Json.Serialization;
-
 
 var builder   = WebApplication.CreateBuilder(args);
 var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
@@ -27,18 +29,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 		   };
 	   });
 
-builder.Services.AddAzureClients(x =>
-{
-    x.AddClient<BlobContainerClient, BlobContainerClientOptions>(opt =>
-        new BlobContainerClient(
-            builder.Configuration["PictureStorage:ConnectionString"],
-            builder.Configuration["PictureStorage:ContainerName"]));
+builder.Services.AddAzureClients(x => {
+	x.AddClient<BlobContainerClient, BlobContainerClientOptions>(opt =>
+																	 new BlobContainerClient(
+																		 builder.Configuration[
+																			 "PictureStorage:ConnectionString"],
+																		 builder.Configuration[
+																			 "PictureStorage:ContainerName"]));
 });
 
-
 builder.Services.AddCors();
-builder.Services.AddControllers().AddJsonOptions(c =>
-{
+builder.Services.AddControllers().AddJsonOptions(c => {
 	c.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 builder.Services.AddEndpointsApiExplorer();
